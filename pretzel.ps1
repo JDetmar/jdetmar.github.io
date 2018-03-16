@@ -42,8 +42,6 @@ https://cakebuild.net
 [CmdletBinding()]
 Param(
     [string]$Script = "pretzel.cake",
-    [string]$Target,
-    [string]$Configuration,
     [string]$Target = "Default",
     [ValidateSet("Release", "Debug")]
     [string]$Configuration = "Release",
