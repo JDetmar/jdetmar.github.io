@@ -44,6 +44,9 @@ Param(
     [string]$Script = "pretzel.cake",
     [string]$Target,
     [string]$Configuration,
+    [string]$Target = "Default",
+    [ValidateSet("Release", "Debug")]
+    [string]$Configuration = "Release",
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
     [string]$Verbosity,
     [switch]$ShowDescription,
