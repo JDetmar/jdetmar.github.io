@@ -1,0 +1,28 @@
+branches:
+  only:
+    - source
+    
+environment:
+  access_token:
+    secure: Xz/cTXzYx7k8q6WR1sdw6keoaElOfwaRCU0hlIfp1xzytBklOCbNIp9o+YE40kKS
+
+install:
+  - git submodule init
+  - git submodule update
+  - cinst pretzel
+
+build_script:
+  - ps: .\pretzel.ps1
+
+test: off
+
+on_success:
+  # See http://www.appveyor.com/docs/how-to/git-push for more info
+  - git config --global credential.helper store
+  - git config --global user.email %APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL%
+  - git config --global user.name %APPVEYOR_REPO_COMMIT_AUTHOR%
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - cmd: cd _site
+  - git add .
+  - git commit -m "From Appveyor [skip appveyor]"
+  - git push origin HEAD:master -f
